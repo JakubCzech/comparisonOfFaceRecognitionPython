@@ -61,12 +61,13 @@ if not exists("haarcascade_frontalface_default.xml"):
     url = "https://raw.githubusercontent.com/opencv/opencv/master/data/haarcascades/haarcascade_frontalface_default.xml"
     urllib.request.urlretrieve(url, filename="haarcascade_frontalface_default.xml")
 
-fig1 = plt.figure(figsize=(10, 30))
-for id, image in enumerate(images):
-    ret_image, face_quantity = detectAndDisplay(image)
-    fig1.add_subplot(len(images), 1, id + 1)
-    color_image = cv.cvtColor(ret_image, cv.COLOR_BGR2RGB)
-    plt.imshow(color_image)
-    plt.axis('off')
-    plt.title("Image: " + str(id + 1) + " Face: " + str(face_quantity))
-plt.show()
+if __name__ == '__main__':
+    fig1 = plt.figure(figsize=(10, 30))
+    for id, image in enumerate(images):
+        ret_image, face_quantity = detectAndDisplay(image)
+        fig1.add_subplot(len(images), 1, id + 1)
+        color_image = cv.cvtColor(ret_image, cv.COLOR_BGR2RGB)
+        plt.imshow(color_image)
+        plt.axis('off')
+        plt.title("Image: " + str(id + 1) + " Face: " + str(face_quantity))
+    plt.show()
