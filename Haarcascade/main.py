@@ -22,9 +22,9 @@ for image_id, image in enumerate(images):
 plt.show()
 
 
-def detect_face(image):
+def detect_face(image_to_detect):
     face_cascade = cv.CascadeClassifier("haarcascade_frontalface_default.xml")
-    frame_gray = cv.cvtColor(image, cv.COLOR_BGR2GRAY)
+    frame_gray = cv.cvtColor(image_to_detect, cv.COLOR_BGR2GRAY)
     frame_gray = cv.equalizeHist(frame_gray)
     faces = face_cascade.detectMultiScale(frame_gray, scaleFactor=1.1, minNeighbors=15)
 
@@ -33,7 +33,7 @@ def detect_face(image):
     for (x, y, w, h) in faces:
         avg += w
     avg /= len(faces)
-    print("Average", avg)
+    print(f'Average {avg}')
 
     # Bound
     size_range = .4
@@ -45,7 +45,7 @@ def detect_face(image):
     for (x, y, w, h) in faces:
         if lower_bound < w < upper_bound:
             center_face = (x + w // 2, y + h // 2)
-            ret_image = cv.ellipse(image, center_face, (w // 2, h // 2), 0, 0, 360, (255, 0, 0, 4), 3)
+            ret_image = cv.ellipse(image_to_detect, center_face, (w // 2, h // 2), 0, 0, 360, (255, 0, 0, 4), 3)
             num_of_faces += 1
     return ret_image, num_of_faces
 
@@ -64,5 +64,5 @@ if __name__ == '__main__':
         color_image = cv.cvtColor(ret_image, cv.COLOR_BGR2RGB)
         plt.imshow(color_image)
         plt.axis('off')
-        plt.title("Image: " + str(image_id + 1) + " Face: " + str(face_quantity))
+        plt.title(f'Image: {image_id+1} faces: {face_quantity}')
     plt.show()
